@@ -7,6 +7,7 @@ sdk: docker
 app_port: 8000
 tags:
   - openenv
+short_description: "Blood pathology diagnostic AI agent environment"
 base_path: /web
 ---
 # Blood Pathology LIMS Environment 🩸
