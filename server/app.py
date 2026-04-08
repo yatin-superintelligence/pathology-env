@@ -53,6 +53,26 @@ app = create_app(
 )
 
 
+# Root route so HF Space App tab doesn't show 404
+@app.get("/")
+async def root():
+    return {
+        "name": "Blood Pathology LIMS Environment",
+        "version": "2.1",
+        "status": "running",
+        "endpoints": {
+            "health": "/health",
+            "reset": "POST /reset",
+            "step": "POST /step",
+            "state": "GET /state",
+            "schema": "GET /schema",
+        },
+        "tasks": ["easy", "medium", "hard"],
+        "description": "Clinical pathology diagnostic AI agent environment. "
+                       "Set TASK_LEVEL env var and use /reset + /step to interact.",
+    }
+
+
 def main(host: str = "0.0.0.0", port: int = 8000):
     """
     Entry point for direct execution via uv run or python -m.
