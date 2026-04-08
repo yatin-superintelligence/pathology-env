@@ -189,7 +189,6 @@ Built by **Yatin Taneja** — AI System Engineer and Superintelligence Researche
 
 As part of my ongoing work in AI safety and autonomous agentic systems, this environment was designed to test whether LLM agents can perform genuine scientific reasoning under clinical constraints — interpreting lab results against demographic-dependent thresholds, cross-referencing medications, and synthesizing multi-panel disease patterns.
 
-- **[IM Superintelligence](https://www.imsuperintelligence.ai)** — Central knowledge hub with open datasets and 2,000+ articles on Superintelligence, cognitive architectures, and AI safety
-- **[Portfolio](https://www.yatintaneja.in)** — Professional portfolio with full-stack AI agent prototypes
-- **[LinkedIn](https://www.linkedin.com/in/yatintaneja-pro/)** — Connect for collaboration on autonomous systems and enterprise AI
-- **[GitHub](https://github.com/yatin-superintelligence)** — Open-source datasets and research
+- **[IM Superintelligence](https://www.imsuperintelligence.ai):** Visit my central knowledge hub hosting other open datasets and over **[2,000 articles](https://www.imsuperintelligence.ai/blog)** exploring Superintelligence, cognitive architectures, quantum computing, distributed networks, and the future of the global education sector, authored through a custom 8-step multi-model agentic infrastructure.
+- **[Yatin Taneja | Professional Portfolio](https://www.yatintaneja.in):** View my professional portfolio for a comprehensive overview of my skills, industry experience, and software prototypes as part of my ongoing engineering work in full-stack AI agents and applications.
+- **[LinkedIn](https://www.linkedin.com/in/yatintaneja-pro/):** Connect on LinkedIn to collaborate on advanced autonomous systems, enterprise AI implementations, or to follow my ongoing research.
