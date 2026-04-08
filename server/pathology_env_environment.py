@@ -809,7 +809,7 @@ class PathologyEnvironment(Environment):
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     def _grade_easy_b(self) -> float:
         """Acute MI — patient 1005. Troponin I 2.8 ng/mL (crit threshold 0.4)."""
@@ -833,7 +833,7 @@ class PathologyEnvironment(Environment):
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     def _grade_easy_c(self) -> float:
         """Severe anemia — patient 1006. Hb 6.2 g/dL (crit threshold 7.0)."""
@@ -858,7 +858,7 @@ class PathologyEnvironment(Environment):
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     def _grade_medium(self) -> float:
         if self.task_variant == 0:
@@ -893,7 +893,7 @@ class PathologyEnvironment(Environment):
                 elif rep["severity"] == "WARNING" and rep["icd_code"].startswith(("O24", "Z3")): score += 0.10
                 elif rep["severity"] in ("CRITICAL", "HIGH"): score -= 0.10
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     def _grade_medium_b(self) -> float:
         """Warfarin supratherapeutic INR — patient 1007. INR 4.8 (target 2.5-3.5 for mech valve)."""
@@ -916,7 +916,7 @@ class PathologyEnvironment(Environment):
                 elif rep["severity"] == "HIGH": score += 0.10
                 elif rep["severity"] == "CRITICAL": score += 0.03  # over-triaging
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     def _grade_medium_c(self) -> float:
         """Drug-induced hyperkalemia — patient 1008. K+ 5.8 on ACE + K supplement + CKD."""
@@ -936,7 +936,7 @@ class PathologyEnvironment(Environment):
                 elif rep["severity"] == "CRITICAL": score += 0.03  # over-triaging for 5.8
                 elif rep["severity"] == "HIGH": score += 0.10
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     def _grade_hard(self) -> float:
         if self.task_variant == 0:
@@ -964,7 +964,7 @@ class PathologyEnvironment(Environment):
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     def _grade_hard_b(self) -> float:
         """Tumor Lysis Syndrome — patient 1009. Must identify TLS tetrad."""
@@ -987,7 +987,7 @@ class PathologyEnvironment(Environment):
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 1.0), 0.0)
+        return max(min(score, 0.999), 0.001)
 
     # ────────────────────────────────────────
     # CORE API

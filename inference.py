@@ -229,7 +229,7 @@ async def run_task(level: str):
 
         # sum(rewards) = final cumulative score since rewards stores deltas
         score = sum(rewards) / MAX_TOTAL_REWARD if MAX_TOTAL_REWARD > 0 else 0.0
-        score = min(max(score, 0.0), 1.0)  # clamp to [0, 1]
+        score = min(max(score, 0.001), 0.999)  # clamp to (0, 1) — strictly between, not inclusive
         success = score >= SUCCESS_SCORE_THRESHOLD
 
     finally:
