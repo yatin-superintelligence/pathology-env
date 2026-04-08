@@ -8,7 +8,7 @@ app_port: 8000
 tags:
   - openenv
 short_description: "Blood pathology diagnostic AI agent environment"
-base_path: /web
+pinned: false
 ---
 # Blood Pathology LIMS Environment 🩸
 
@@ -81,11 +81,12 @@ class PathologyObservation(Observation):
 ## Grading
 
 - **100% deterministic** — no subjective text matching, all grading is based on verifiable actions
-- Fractional scoring (0.0–1.0) with dense rewards for investigative steps (demographics, medications, labs, references, previous results)
-- **ICD-10 accuracy** carries highest weight (55-70% per scenario)
+- Fractional scoring within the open interval (0.01–0.99), with dense rewards for investigative steps (demographics, medications, labs, references, previous results)
+- Each grader starts with a 0.01 participation credit; max possible score is 0.99 by design
+- **ICD-10 accuracy** carries highest weight (53–68% per scenario)
 - Partial credit for clinically reasonable alternate ICD codes (e.g., D68.3 instead of T45.515A for Warfarin)
 - Penalties for false-positive diagnoses (e.g., diagnosing anemia in a healthy pregnant patient)
-- Wrong answers are penalized down to 0.00
+- Wrong answers are penalized but scores never go below 0.01
 
 ## Score Breakdown
 
@@ -165,11 +166,23 @@ The inference script:
 
 ## Baseline Scores
 
-| Task   | Model       | Score | Steps |
-| ------ | ----------- | ----- | ----- |
-| Easy   | Gemma-4-26B | 1.00  | 9     |
-| Medium | Gemma-4-26B | 0.95  | 9     |
-| Hard   | Gemma-4-26B | 0.58  | 11    |
+### Gemma-4-31B-it (via HF Inference API)
+
+| Task   | Score | Steps | Variant                        |
+| ------ | ----- | ----- | ------------------------------ |
+| Easy   | 0.97  | 8     | Severe Anemia (Hb 6.2)        |
+| Medium | 0.51  | 11    | Pregnancy Hb (false positive)  |
+| Hard   | 0.38  | 9     | Tumor Lysis Syndrome           |
+| **Avg**| **0.62** | — | —                             |
+
+### Gemma-3-27B-it (via HF Inference API)
+
+| Task   | Score | Steps | Variant                        |
+| ------ | ----- | ----- | ------------------------------ |
+| Easy   | 0.71  | 8     | Hyperkalemia (K+ 7.2)          |
+| Medium | 0.51  | 9     | Pregnancy Hb (false positive)  |
+| Hard   | 0.14  | 11    | DIC (multi-panel)              |
+| **Avg**| **0.45** | — | —                             |
 
 *Easy tasks are solvable by most models. Medium requires cross-referencing medications/demographics to avoid false positives. Hard requires synthesizing 3+ lab panels into a rare syndrome diagnosis (DIC/TLS) — challenging even for frontier models.*
 

@@ -785,7 +785,7 @@ class PathologyEnvironment(Environment):
 
     def _grade_easy_a(self) -> float:
         """Hyperkalemia — patient 1001. K+ 7.2 mEq/L (crit threshold 6.5)."""
-        score = 0.0
+        score = 0.01  # participation credit
         # Investigation (10% max) — small signal for following workflow
         if 1001 in self.queried_demographics: score += 0.03
         if 1001 in self.queried_medications: score += 0.03
@@ -802,18 +802,18 @@ class PathologyEnvironment(Environment):
         # Diagnosis (60% ICD + 15% severity = 75%)
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1001:
-                if rep["icd_code"] in ("E87.5", "E875"): score += 0.60
+                if rep["icd_code"] in ("E87.5", "E875"): score += 0.58  # max natural = 0.99
                 elif rep["icd_code"].startswith("E87"): score += 0.30  # right electrolyte category
                 elif rep["icd_code"].startswith("T46"): score += 0.15  # drug adverse effect angle
                 else: score -= 0.30  # wrong diagnosis
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     def _grade_easy_b(self) -> float:
         """Acute MI — patient 1005. Troponin I 2.8 ng/mL (crit threshold 0.4)."""
-        score = 0.0
+        score = 0.01  # participation credit
         if 1005 in self.queried_demographics: score += 0.03
         if 1005 in self.queried_medications: score += 0.03
         if "ORD-EB01" in self.queried_lab_results: score += 0.02
@@ -827,17 +827,17 @@ class PathologyEnvironment(Environment):
                 break
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1005:
-                if rep["icd_code"] in ("I21.9", "I21.3", "I21.0"): score += 0.60
+                if rep["icd_code"] in ("I21.9", "I21.3", "I21.0"): score += 0.58  # max natural = 0.99
                 elif rep["icd_code"].startswith("I21"): score += 0.30  # right category
                 else: score -= 0.30
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     def _grade_easy_c(self) -> float:
         """Severe anemia — patient 1006. Hb 6.2 g/dL (crit threshold 7.0)."""
-        score = 0.0
+        score = 0.01  # participation credit
         if 1006 in self.queried_demographics: score += 0.03
         if "ORD-EC01" in self.queried_lab_results: score += 0.02
         if "Hemoglobin" in self.queried_references: score += 0.03
@@ -851,14 +851,14 @@ class PathologyEnvironment(Environment):
                 break
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1006:
-                if rep["icd_code"] in ("D64.9", "D50.9", "D50.0"): score += 0.60
+                if rep["icd_code"] in ("D64.9", "D50.9", "D50.0"): score += 0.58  # max natural = 0.99
                 elif rep["icd_code"] in ("D62", "D50.1", "D63.1", "D50.8"): score += 0.45  # valid anemia subtypes
                 elif rep["icd_code"][:3] >= "D50" and rep["icd_code"][:3] <= "D64": score += 0.30  # anemia category
                 else: score -= 0.30
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     def _grade_medium(self) -> float:
         if self.task_variant == 0:
@@ -871,7 +871,7 @@ class PathologyEnvironment(Environment):
     def _grade_medium_a(self) -> float:
         """Pregnancy Hb — patient 1002. Hb 11.5 (NORMAL for pregnant at 28wk).
         The trap: agent must recognize pregnancy-adjusted ranges. Flagging as critical = WRONG."""
-        score = 0.0
+        score = 0.01  # participation credit
         # Demographics is critical here — must see pregnancy flag
         if 1002 in self.queried_demographics: score += 0.10  # KEY: pregnancy flag changes interpretation
         if 1002 in self.queried_medications: score += 0.05
@@ -884,7 +884,7 @@ class PathologyEnvironment(Environment):
         # Diagnosis — must be NORMAL, not anemia
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1002:
-                if rep["icd_code"] == "NORMAL": score += 0.55
+                if rep["icd_code"] == "NORMAL": score += 0.53  # max natural = 0.99
                 elif rep["icd_code"].startswith("Z3"): score += 0.40  # pregnancy supervision/screening = reasonable "normal"
                 elif rep["icd_code"].startswith("O24"): score += 0.15  # GDM focus — valid but not what we're testing
                 elif rep["icd_code"].startswith("O99.0"): score -= 0.30  # anemia in pregnancy = wrong
@@ -893,11 +893,11 @@ class PathologyEnvironment(Environment):
                 elif rep["severity"] == "WARNING" and rep["icd_code"].startswith(("O24", "Z3")): score += 0.10
                 elif rep["severity"] in ("CRITICAL", "HIGH"): score -= 0.10
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     def _grade_medium_b(self) -> float:
         """Warfarin supratherapeutic INR — patient 1007. INR 4.8 (target 2.5-3.5 for mech valve)."""
-        score = 0.0
+        score = 0.01  # participation credit
         if 1007 in self.queried_demographics: score += 0.03
         if 1007 in self.queried_medications: score += 0.10  # MUST see Warfarin — key to entire diagnosis
         if "INR" in self.queried_references: score += 0.05  # must check therapeutic range
@@ -906,7 +906,7 @@ class PathologyEnvironment(Environment):
         # Diagnosis
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1007:
-                if rep["icd_code"] in ("T45.515A", "T45.515", "T45.515D", "T45.515S"): score += 0.60
+                if rep["icd_code"] in ("T45.515A", "T45.515", "T45.515D", "T45.515S"): score += 0.58  # max natural = 0.99
                 elif rep["icd_code"].startswith("T45.51"): score += 0.45  # right drug, wrong encounter type
                 elif rep["icd_code"] in ("R79.1", "D68.32", "D68.3", "D68.33"): score += 0.30  # partially correct coag codes
                 elif rep["icd_code"].startswith("D68"): score += 0.20  # coag disorder category
@@ -916,11 +916,11 @@ class PathologyEnvironment(Environment):
                 elif rep["severity"] == "HIGH": score += 0.10
                 elif rep["severity"] == "CRITICAL": score += 0.03  # over-triaging
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     def _grade_medium_c(self) -> float:
         """Drug-induced hyperkalemia — patient 1008. K+ 5.8 on ACE + K supplement + CKD."""
-        score = 0.0
+        score = 0.01  # participation credit
         if 1008 in self.queried_demographics: score += 0.03
         if 1008 in self.queried_medications: score += 0.10  # KEY: must see ACE + K supplement — without this, can't know it's drug-induced
         if "Potassium" in self.queried_references: score += 0.02
@@ -928,7 +928,7 @@ class PathologyEnvironment(Environment):
         # Diagnosis
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1008:
-                if rep["icd_code"] in ("E87.5", "E875"): score += 0.60
+                if rep["icd_code"] in ("E87.5", "E875"): score += 0.58  # max natural = 0.99
                 elif rep["icd_code"].startswith("T46.4"): score += 0.35  # adverse effect of ACE inhibitor — valid drug-cause angle
                 elif rep["icd_code"].startswith("E87"): score += 0.25  # electrolyte disorder category
                 else: score -= 0.20
@@ -936,7 +936,7 @@ class PathologyEnvironment(Environment):
                 elif rep["severity"] == "CRITICAL": score += 0.03  # over-triaging for 5.8
                 elif rep["severity"] == "HIGH": score += 0.10
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     def _grade_hard(self) -> float:
         if self.task_variant == 0:
@@ -946,7 +946,7 @@ class PathologyEnvironment(Environment):
 
     def _grade_hard_a(self) -> float:
         """DIC — patient 1004. Must synthesize CBC + Coag + CMP to diagnose."""
-        score = 0.0
+        score = 0.01  # participation credit
         # Investigation (20%) — pulling multiple panels is CRITICAL for DIC diagnosis
         panels_pulled = sum(1 for oid in ["ORD-H001", "ORD-H002", "ORD-H003"] if oid in self.queried_lab_results)
         score += panels_pulled * 0.05  # 0.15 max — can't diagnose DIC without seeing all panels
@@ -956,7 +956,7 @@ class PathologyEnvironment(Environment):
         # Diagnosis (65% ICD + 15% severity = 80%)
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1004:
-                if rep["icd_code"] == "D65": score += 0.65  # DIC
+                if rep["icd_code"] == "D65": score += 0.63  # DIC — max natural = 0.99
                 elif rep["icd_code"].startswith("D68"): score += 0.25  # coagulopathy category — close but wrong specific code
                 elif rep["icd_code"] == "A41.9": score += 0.10  # only identified sepsis, missed DIC
                 elif rep["icd_code"] in ("D69.6", "D69.59"): score += 0.15  # thrombocytopenia only
@@ -964,11 +964,11 @@ class PathologyEnvironment(Environment):
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     def _grade_hard_b(self) -> float:
         """Tumor Lysis Syndrome — patient 1009. Must identify TLS tetrad."""
-        score = 0.0
+        score = 0.01  # participation credit
         # Investigation (15%)
         panels_pulled = sum(1 for oid in ["ORD-HB01", "ORD-HB02"] if oid in self.queried_lab_results)
         score += panels_pulled * 0.04  # 0.08 max
@@ -978,7 +978,7 @@ class PathologyEnvironment(Environment):
         # Diagnosis (70% ICD + 15% severity = 85%)
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1009:
-                if rep["icd_code"] in ("E88.3", "E883"): score += 0.70  # TLS
+                if rep["icd_code"] in ("E88.3", "E883"): score += 0.68  # TLS — max natural = 0.99
                 elif rep["icd_code"].startswith("E88"): score += 0.35  # metabolic disorder category
                 elif rep["icd_code"] == "E79.0": score += 0.15  # hyperuricemia only = partial
                 elif rep["icd_code"].startswith("E87"): score += 0.10  # electrolyte only = too shallow
@@ -987,7 +987,7 @@ class PathologyEnvironment(Environment):
                 if rep["severity"] == "CRITICAL": score += 0.15
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
-        return max(min(score, 0.999), 0.001)
+        return max(min(score, 0.99), 0.01)
 
     # ────────────────────────────────────────
     # CORE API
