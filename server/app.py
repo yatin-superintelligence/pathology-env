@@ -124,6 +124,12 @@ async def root():
     <div class="ep"><span><span class="method">GET</span> <span class="path">/schema</span></span><span class="info">Action/observation schema</span></div>
   </div>
 
+  <h2>Interactive Tools</h2>
+  <div class="tasks">
+    <a href="/web" class="task easy" style="text-decoration:none;"><div class="level">🧪 Playground</div><div class="variants">Interactive testing UI</div></a>
+    <a href="/docs" class="task medium" style="text-decoration:none;"><div class="level">📋 API Docs</div><div class="variants">Swagger / OpenAPI</div></a>
+  </div>
+
   <p class="footer">Built by <a href="https://www.yatintaneja.in">Yatin Taneja</a> · <a href="https://www.imsuperintelligence.ai">IM Superintelligence</a></p>
 </div>
 </body>
