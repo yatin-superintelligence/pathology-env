@@ -23,7 +23,7 @@ MODEL_NAME = os.getenv("MODEL_NAME", "google/gemma-4-26B-A4B-it:novita")
 API_KEY = os.getenv("HF_TOKEN", os.getenv("OPENAI_API_KEY", ""))
 if not API_KEY:
     raise ValueError("HF_TOKEN environment variable is required")
-IMAGE_NAME = os.getenv("IMAGE_NAME", "pathology_env_env:latest")
+IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME", os.getenv("IMAGE_NAME", "pathology_env_env:latest"))
 BENCHMARK = "pathology_env"
 MAX_STEPS = 20
 MAX_TOTAL_REWARD = 1.0
