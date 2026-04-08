@@ -52,9 +52,10 @@ app = create_app(
     max_concurrent_envs=1,  # increase this number to allow more concurrent WebSocket sessions
 )
 
+# Remove OpenEnv's default "/" redirect so our custom landing page takes priority
+app.routes[:] = [r for r in app.routes if not (hasattr(r, 'path') and r.path == '/' and hasattr(r, 'methods') and 'GET' in r.methods)]
 
-# Override OpenEnv's "/" redirect with our custom landing page.
-# The Gradio playground remains at /web/
+# Custom landing page at / — Gradio playground stays at /web/
 @app.get("/", include_in_schema=False)
 async def root():
     from fastapi.responses import HTMLResponse
