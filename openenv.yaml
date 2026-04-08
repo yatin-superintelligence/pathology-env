@@ -1,0 +1,11 @@
+spec_version: 1
+name: pathology_env
+type: space
+runtime: fastapi
+app: server.app:app
+port: 8000
+description: >
+  Blood Pathology LIMS environment. Agent performs clinical diagnostics
+  by interpreting multi-panel lab results against demographic-dependent
+  reference ranges, medication interactions, and ICD-10 coding across
+  8 randomized clinical scenarios (easy/medium/hard).
