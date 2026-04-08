@@ -185,4 +185,11 @@ The inference script:
 
 ## Author
 
-Built by **Yatin Taneja** for the Meta OpenEnv Hackathon (Round 1).
+Built by **Yatin Taneja** — AI System Engineer and Superintelligence Researcher.
+
+As part of my ongoing work in AI safety and autonomous agentic systems, this environment was designed to test whether LLM agents can perform genuine scientific reasoning under clinical constraints — interpreting lab results against demographic-dependent thresholds, cross-referencing medications, and synthesizing multi-panel disease patterns.
+
+- **[IM Superintelligence](https://www.imsuperintelligence.ai)** — Central knowledge hub with open datasets and 2,000+ articles on Superintelligence, cognitive architectures, and AI safety
+- **[Portfolio](https://www.yatintaneja.in)** — Professional portfolio with full-stack AI agent prototypes
+- **[LinkedIn](https://www.linkedin.com/in/yatintaneja-pro/)** — Connect for collaboration on autonomous systems and enterprise AI
+- **[GitHub](https://github.com/yatin-superintelligence)** — Open-source datasets and research
