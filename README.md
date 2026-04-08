@@ -11,7 +11,7 @@ base_path: /web
 ---
 # Blood Pathology LIMS Environment 🩸
 
-A deeply scientific, real-world AI agent environment for the OpenEnv Hackathon. The agent is dropped into a hospital **Laboratory Information Management System (LIMS)** and must perform clinical pathology diagnostics using real biomarker reference ranges, patient demographics, medication cross-referencing, and ICD-10 coding.
+A deeply scientific, real-world AI agent environment built for the **Meta × Scaler OpenEnv Hackathon** — India's Biggest AI Hackathon, sponsored by **Meta**, **PyTorch**, and **Hugging Face**. The agent is dropped into a hospital **Laboratory Information Management System (LIMS)** and must perform clinical pathology diagnostics using real biomarker reference ranges, patient demographics, medication cross-referencing, and ICD-10 coding.
 
 ## Why This Environment?
 
