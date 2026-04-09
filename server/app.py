@@ -102,7 +102,7 @@ async def root():
 <div class="container">
   <h1>🩸 Blood Pathology LIMS Environment</h1>
   <span class="badge">● Running</span>
-  <p class="desc">Clinical pathology diagnostic AI agent environment for the Meta × Scaler OpenEnv Hackathon. The agent interprets lab results, cross-references medications, and submits ICD-10 diagnoses.</p>
+  <p class="desc">High-fidelity clinical pathology diagnostic environment. The agent interprets blood biomarker panels against context-adjusted reference ranges, cross-references medications for drug-lab interactions, and issues ICD-10–coded diagnostic reports.</p>
 
   <a href="/web/" class="playground-btn">🧪 Open Interactive Playground</a>
 
@@ -131,6 +131,8 @@ async def root():
     <div class="ep"><span><span class="method">GET</span> <span class="path">/state</span></span><span class="info">Current state</span></div>
     <div class="ep"><span><span class="method">GET</span> <span class="path">/schema</span></span><span class="info">Action/observation schema</span></div>
   </div>
+
+  <p style="text-align:center; margin-top:20px;"><a href="https://huggingface.co/spaces/yatin-superintelligence/pathology-env/blob/main/README.md" style="color:#58a6ff; font-size:0.95rem;">📄 Full Documentation (README)</a></p>
 
   <p class="footer">Built by <a href="https://www.yatintaneja.in">Yatin Taneja</a> · <a href="https://www.imsuperintelligence.ai">IM Superintelligence</a></p>
 </div>
