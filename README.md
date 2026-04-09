@@ -166,25 +166,15 @@ The inference script:
 
 ## Baseline Scores
 
-### Gemma-4-31B-it (via HF Inference API)
+Tested via `inference.py` against a local Docker container using OpenRouter. Full trajectory logs are available in `trajectories/`.
 
-| Task   | Score | Steps | Variant                        |
-| ------ | ----- | ----- | ------------------------------ |
-| Easy   | 0.97  | 8     | Severe Anemia (Hb 6.2)        |
-| Medium | 0.51  | 11    | Pregnancy Hb (false positive)  |
-| Hard   | 0.38  | 9     | Tumor Lysis Syndrome           |
-| **Avg**| **0.62** | — | —                             |
+| Model | Easy | Medium | Hard | Avg |
+| ----- | ---- | ------ | ---- | --- |
+| **Gemma-4-31B-it** | 0.99 (Anemia) | 0.94 (Drug-K+) | 0.30 (DIC) | **0.74** |
+| **Qwen 3.6 Plus** | 0.99 (Anemia) | 0.51 (Pregnancy Hb) | 0.99 (TLS) | **0.83** |
+| **MiniMax M2.7** | 0.99 (Hyperkalemia) | 0.94 (Drug-K+) | 0.33 (DIC) | **0.75** |
 
-### Gemma-3-27B-it (via HF Inference API)
-
-| Task   | Score | Steps | Variant                        |
-| ------ | ----- | ----- | ------------------------------ |
-| Easy   | 0.71  | 8     | Hyperkalemia (K+ 7.2)          |
-| Medium | 0.51  | 9     | Pregnancy Hb (false positive)  |
-| Hard   | 0.14  | 11    | DIC (multi-panel)              |
-| **Avg**| **0.45** | — | —                             |
-
-*Easy tasks are solvable by most models. Medium requires cross-referencing medications/demographics to avoid false positives. Hard requires synthesizing 3+ lab panels into a rare syndrome diagnosis (DIC/TLS) — challenging even for frontier models.*
+*Easy tasks are solvable by most models. Medium requires cross-referencing medications/demographics to avoid false positives. Hard requires synthesizing 3+ lab panels into a rare syndrome diagnosis (DIC/TLS), flagging multiple critical values, and submitting the correct ICD-10 code — challenging even for frontier models.*
 
 ## Specs
 

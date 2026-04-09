@@ -117,8 +117,9 @@ async def root():
   <div class="scores">
     <table>
       <tr><th>Model</th><th>Easy</th><th>Medium</th><th>Hard</th><th>Avg</th></tr>
-      <tr><td>Gemma-4-31B</td><td>0.97</td><td>0.51</td><td>0.38</td><td><b>0.62</b></td></tr>
-      <tr><td>Gemma-3-27B</td><td>0.71</td><td>0.51</td><td>0.14</td><td><b>0.45</b></td></tr>
+      <tr><td>Gemma-4-31B</td><td>0.99</td><td>0.94</td><td>0.30</td><td><b>0.74</b></td></tr>
+      <tr><td>Qwen 3.6 Plus</td><td>0.99</td><td>0.51</td><td>0.99</td><td><b>0.83</b></td></tr>
+      <tr><td>MiniMax M2.7</td><td>0.99</td><td>0.94</td><td>0.33</td><td><b>0.75</b></td></tr>
     </table>
   </div>
 
