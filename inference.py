@@ -302,5 +302,5 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except Exception as exc:
-        print(f"[END] {{\"success\": false, \"error\": \"{exc}\"}}", flush=True)
+        print(f"[END] success=false steps=0 score=0.00 rewards= error={exc}", flush=True)
         raise
