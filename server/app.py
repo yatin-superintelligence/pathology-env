@@ -132,7 +132,7 @@ async def root():
     <div class="ep"><span><span class="method">GET</span> <span class="path">/schema</span></span><span class="info">Action/observation schema</span></div>
   </div>
 
-  <p style="text-align:center; margin-top:20px;"><a href="https://huggingface.co/spaces/yatin-superintelligence/pathology-env/blob/main/README.md" style="color:#58a6ff; font-size:0.95rem;">📄 Full Documentation (README)</a></p>
+  <p style="text-align:center; margin-top:20px;"><a href="https://huggingface.co/spaces/yatin-superintelligence/pathology-env/blob/main/README.md" target="_blank" style="color:#58a6ff; font-size:0.95rem;">📄 Full Documentation (README)</a></p>
 
   <p class="footer">Built by <a href="https://www.yatintaneja.in">Yatin Taneja</a> · <a href="https://www.imsuperintelligence.ai">IM Superintelligence</a></p>
 </div>
