@@ -166,7 +166,7 @@ The inference script:
 
 ## Baseline Scores
 
-Tested via `inference.py` against a local Docker container using OpenRouter. Full trajectory logs are available in `trajectories/`.
+Evaluated via `inference.py` against the Docker environment image using OpenRouter. Trajectory logs are included in `trajectories/`.
 
 | Model | Easy | Medium | Hard | Avg |
 | ----- | ---- | ------ | ---- | --- |
