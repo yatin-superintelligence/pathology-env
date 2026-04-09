@@ -156,7 +156,7 @@ async def run_task(level: str):
             env = await PathologyEnv.from_docker_image(LOCAL_IMAGE_NAME)
     else:
         print(f"[DEBUG] No LOCAL_IMAGE_NAME set, connecting to HF Space: {HF_SPACE_URL}", flush=True)
-        env = PathologyEnv(HF_SPACE_URL)
+        env = PathologyEnv(HF_SPACE_URL, connect_timeout_s=30, message_timeout_s=120)
         await env.connect()
 
     history: List[str] = []
@@ -199,7 +199,20 @@ async def run_task(level: str):
 
             messages.append({"role": "assistant", "content": raw})
 
-            result = await env.step(action)
+            # Execute step with reconnection on WebSocket drop
+            try:
+                result = await env.step(action)
+            except Exception as ws_err:
+                print(f"[DEBUG] WebSocket error, reconnecting: {ws_err}", flush=True)
+                try:
+                    await env.close()
+                except Exception:
+                    pass
+                env = PathologyEnv(HF_SPACE_URL, connect_timeout_s=30, message_timeout_s=120)
+                await env.connect()
+                result = await env.reset(task_level=level)
+                result = await env.step(action)
+
             obs = result.observation
             reward = result.reward or 0.0
             done = result.done or False
