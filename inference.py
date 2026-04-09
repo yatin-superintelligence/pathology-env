@@ -27,7 +27,9 @@ if not HF_TOKEN:
 API_KEY = HF_TOKEN
 
 # Optional — if you use from_docker_image():
-LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME", "pathology_env_env:latest")
+LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
+# HF Space URL for direct connection when Docker image isn't available
+HF_SPACE_URL = os.getenv("HF_SPACE_URL", "https://yatin-superintelligence-pathology-env.hf.space")
 BENCHMARK = "pathology_env"
 MAX_STEPS = 20
 MAX_TOTAL_REWARD = 1.0
@@ -146,10 +148,16 @@ async def run_task(level: str):
     """Run a single diagnostic task at the given difficulty level."""
     client = AsyncOpenAI(base_url=API_BASE_URL, api_key=API_KEY)
 
-    try:
-        env = await PathologyEnv.from_docker_image(LOCAL_IMAGE_NAME, env_vars={"TASK_LEVEL": level})
-    except TypeError:
-        env = await PathologyEnv.from_docker_image(LOCAL_IMAGE_NAME)
+    if LOCAL_IMAGE_NAME:
+        print(f"[DEBUG] Using Docker image: {LOCAL_IMAGE_NAME}", flush=True)
+        try:
+            env = await PathologyEnv.from_docker_image(LOCAL_IMAGE_NAME, env_vars={"TASK_LEVEL": level})
+        except TypeError:
+            env = await PathologyEnv.from_docker_image(LOCAL_IMAGE_NAME)
+    else:
+        print(f"[DEBUG] No LOCAL_IMAGE_NAME set, connecting to HF Space: {HF_SPACE_URL}", flush=True)
+        env = PathologyEnv(HF_SPACE_URL)
+        await env.connect()
 
     history: List[str] = []
     rewards: List[float] = []
