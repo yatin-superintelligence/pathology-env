@@ -2,5 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 *.egg-info/
-trajectories/
+trajectories_backup/
 *.log
