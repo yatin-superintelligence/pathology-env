@@ -170,6 +170,7 @@ Evaluated via `inference.py` against the Docker environment image using OpenRout
 
 | Model                    | Easy                | Medium              | Hard       | Avg            |
 | ------------------------ | ------------------- | ------------------- | ---------- | -------------- |
+| **Gemma-4-26B-A4B-it** | 0.99 (Anemia)       | 0.94 (Drug-K+)      | 0.08 (TLS) | **0.67** |
 | **Gemma-4-31B-it** | 0.99 (Anemia)       | 0.94 (Drug-K+)      | 0.30 (DIC) | **0.74** |
 | **Qwen 3.6 Plus**  | 0.99 (Anemia)       | 0.51 (Pregnancy Hb) | 0.99 (TLS) | **0.83** |
 | **MiniMax M2.7**   | 0.99 (Hyperkalemia) | 0.94 (Drug-K+)      | 0.33 (DIC) | **0.75** |
