@@ -16,14 +16,18 @@ from models import PathologyAction
 from openai import AsyncOpenAI
 
 # ──────────────────────────────────────────────
-# Required environment variables (with defaults)
+# Required environment variables
+# Defaults are set only for API_BASE_URL and MODEL_NAME (not HF_TOKEN)
 # ──────────────────────────────────────────────
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "google/gemma-4-26B-A4B-it:novita")
-API_KEY = os.getenv("HF_TOKEN", os.getenv("OPENAI_API_KEY", ""))
-if not API_KEY:
+HF_TOKEN = os.getenv("HF_TOKEN")
+if not HF_TOKEN:
     raise ValueError("HF_TOKEN environment variable is required")
-IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME", os.getenv("IMAGE_NAME", "pathology_env_env:latest"))
+API_KEY = HF_TOKEN
+
+# Optional — if you use from_docker_image():
+LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 BENCHMARK = "pathology_env"
 MAX_STEPS = 20
 MAX_TOTAL_REWARD = 1.0
@@ -143,9 +147,9 @@ async def run_task(level: str):
     client = AsyncOpenAI(base_url=API_BASE_URL, api_key=API_KEY)
 
     try:
-        env = await PathologyEnv.from_docker_image(IMAGE_NAME, env_vars={"TASK_LEVEL": level})
+        env = await PathologyEnv.from_docker_image(LOCAL_IMAGE_NAME, env_vars={"TASK_LEVEL": level})
     except TypeError:
-        env = await PathologyEnv.from_docker_image(IMAGE_NAME)
+        env = await PathologyEnv.from_docker_image(LOCAL_IMAGE_NAME)
 
     history: List[str] = []
     rewards: List[float] = []
