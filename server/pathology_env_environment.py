@@ -992,9 +992,10 @@ class PathologyEnvironment(Environment):
     # ────────────────────────────────────────
     # CORE API
     # ────────────────────────────────────────
-    def reset(self) -> PathologyObservation:
+    def reset(self, task_level: str = None, **kwargs) -> PathologyObservation:
         self._state = State(episode_id=str(uuid4()), step_count=0)
-        self.task_level = os.environ.get("TASK_LEVEL", "easy").lower()
+        # Priority: explicit parameter > env var > default "easy"
+        self.task_level = (task_level or os.environ.get("TASK_LEVEL", "easy")).lower()
         self.submitted_reports = []
         self.flagged_criticals = []
         self.queried_demographics = set()
