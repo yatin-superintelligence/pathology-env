@@ -168,11 +168,11 @@ The inference script:
 
 Evaluated via `inference.py` against the Docker environment image using OpenRouter. Trajectory logs are included in `trajectories/`.
 
-| Model | Easy | Medium | Hard | Avg |
-| ----- | ---- | ------ | ---- | --- |
-| **Gemma-4-31B-it** | 0.99 (Anemia) | 0.94 (Drug-K+) | 0.30 (DIC) | **0.74** |
-| **Qwen 3.6 Plus** | 0.99 (Anemia) | 0.51 (Pregnancy Hb) | 0.99 (TLS) | **0.83** |
-| **MiniMax M2.7** | 0.99 (Hyperkalemia) | 0.94 (Drug-K+) | 0.33 (DIC) | **0.75** |
+| Model                    | Easy                | Medium              | Hard       | Avg            |
+| ------------------------ | ------------------- | ------------------- | ---------- | -------------- |
+| **Gemma-4-31B-it** | 0.99 (Anemia)       | 0.94 (Drug-K+)      | 0.30 (DIC) | **0.74** |
+| **Qwen 3.6 Plus**  | 0.99 (Anemia)       | 0.51 (Pregnancy Hb) | 0.99 (TLS) | **0.83** |
+| **MiniMax M2.7**   | 0.99 (Hyperkalemia) | 0.94 (Drug-K+)      | 0.33 (DIC) | **0.75** |
 
 *Easy tasks are solvable by most models. Medium requires cross-referencing medications/demographics to avoid false positives. Hard requires synthesizing 3+ lab panels into a rare syndrome diagnosis (DIC/TLS), flagging multiple critical values, and submitting the correct ICD-10 code — challenging even for frontier models.*
 
@@ -197,13 +197,11 @@ This environment is designed to extend beyond benchmarking into practical deploy
 - Graceful error handling — invalid commands return helpful error observations without crashing
 - SQLite in-memory database — runs on 2 vCPU / 8 GB RAM, no GPU required
 
-## Acknowledgment
-
-Originally developed for the **Meta × Scaler OpenEnv Hackathon** — India's Biggest AI Hackathon, sponsored by **Meta**, **PyTorch**, and **Hugging Face**.
+**Note:** Originally developed for the **Meta × Scaler OpenEnv Hackathon** — India's Biggest AI Hackathon, sponsored by **Meta**, **PyTorch**, and **Hugging Face**.
 
 ## Author
 
-Built by **Yatin Taneja** — AI System Engineer and Superintelligence Researcher.
+Built by **Yatin Taneja** — AI System Engineer, Superintelligence Researcher, MBA, Musician, and Poet from New Delhi, India
 
 As part of my ongoing work in AI safety and autonomous agentic systems, this environment was designed to test whether LLM agents can perform genuine scientific reasoning under clinical constraints — interpreting lab results against demographic-dependent thresholds, cross-referencing medications, and synthesizing multi-panel disease patterns.
 
