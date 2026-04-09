@@ -13,7 +13,7 @@ import re
 from typing import List
 from client import PathologyEnv
 from models import PathologyAction
-from openai import AsyncOpenAI
+from openai import OpenAI, AsyncOpenAI
 
 # ──────────────────────────────────────────────
 # Required environment variables
