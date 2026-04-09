@@ -945,23 +945,38 @@ class PathologyEnvironment(Environment):
             return self._grade_hard_b()
 
     def _grade_hard_a(self) -> float:
-        """DIC — patient 1004. Must synthesize CBC + Coag + CMP to diagnose."""
+        """DIC — patient 1004. Must synthesize CBC + Coag + CMP to diagnose.
+        Requires: pulling all 3 panels, flagging critical coag values,
+        querying reference ranges, and correct ICD + severity."""
         score = 0.01  # participation credit
-        # Investigation (20%) — pulling multiple panels is CRITICAL for DIC diagnosis
+        # Investigation (24% max) — pulling multiple panels is CRITICAL for DIC diagnosis
         panels_pulled = sum(1 for oid in ["ORD-H001", "ORD-H002", "ORD-H003"] if oid in self.queried_lab_results)
-        score += panels_pulled * 0.05  # 0.15 max — can't diagnose DIC without seeing all panels
+        score += panels_pulled * 0.04  # 0.12 max — can't diagnose DIC without seeing all panels
         if 1004 in self.queried_demographics: score += 0.02
-        if 1004 in self.queried_medications: score += 0.01
-        if 1004 in self.queried_previous: score += 0.02
-        # Diagnosis (65% ICD + 15% severity = 80%)
+        if 1004 in self.queried_medications: score += 0.02  # Heparin context matters for coag interpretation
+        if 1004 in self.queried_previous: score += 0.03  # delta: Platelets 185→42 shows acute drop
+        # Reference range queries (must verify at least one coag/heme range)
+        coag_refs_queried = sum(1 for r in self.queried_references if r in ("Platelets", "Fibrinogen", "D_Dimer", "PT", "PTT", "INR"))
+        if coag_refs_queried >= 1: score += 0.05
+        # Critical value flagging (20% max) — DIC has multiple critical values that MUST be flagged
+        dic_criticals = {"Platelets", "Fibrinogen", "D_Dimer"}
+        flagged_dic = set()
+        for alert in self.flagged_criticals:
+            if alert["patient_id"] == 1004 and alert["analyte"] in dic_criticals:
+                flagged_dic.add(alert["analyte"])
+        if len(flagged_dic) >= 3: score += 0.20  # all 3 flagged — excellent clinical diligence
+        elif len(flagged_dic) >= 2: score += 0.14  # 2 of 3 — good
+        elif len(flagged_dic) >= 1: score += 0.07  # 1 of 3 — minimal
+        else: score -= 0.05  # no critical flags in a DIC case = clinical failure
+        # Diagnosis (42% ICD + 13% severity = 55%)
         for rep in self.submitted_reports:
             if rep["patient_id"] == 1004:
-                if rep["icd_code"] == "D65": score += 0.63  # DIC — max natural = 0.99
-                elif rep["icd_code"].startswith("D68"): score += 0.25  # coagulopathy category — close but wrong specific code
-                elif rep["icd_code"] == "A41.9": score += 0.10  # only identified sepsis, missed DIC
-                elif rep["icd_code"] in ("D69.6", "D69.59"): score += 0.15  # thrombocytopenia only
+                if rep["icd_code"] == "D65": score += 0.41  # DIC — max natural = 0.99
+                elif rep["icd_code"].startswith("D68"): score += 0.20  # coagulopathy category — close but wrong specific code
+                elif rep["icd_code"] == "A41.9": score += 0.08  # only identified sepsis, missed DIC
+                elif rep["icd_code"] in ("D69.6", "D69.59"): score += 0.12  # thrombocytopenia only
                 else: score -= 0.20
-                if rep["severity"] == "CRITICAL": score += 0.15
+                if rep["severity"] == "CRITICAL": score += 0.13
                 elif rep["severity"] == "HIGH": score += 0.05
                 break
         return max(min(score, 0.99), 0.01)
