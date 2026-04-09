@@ -170,7 +170,7 @@ async def run_task(level: str):
     log_start(task=level, env=BENCHMARK, model=MODEL_NAME)
 
     try:
-        result = await env.reset()
+        result = await env.reset(task_level=level)
         current_obs = result.observation.output
 
         messages = [
