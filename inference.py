@@ -27,7 +27,7 @@ if not HF_TOKEN:
 API_KEY = HF_TOKEN
 
 # Optional — if you use from_docker_image():
-LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
+LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME", "pathology_env_env:latest")
 BENCHMARK = "pathology_env"
 MAX_STEPS = 20
 MAX_TOTAL_REWARD = 1.0
@@ -291,4 +291,8 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except Exception as exc:
+        print(f"[END] {{\"success\": false, \"error\": \"{exc}\"}}", flush=True)
+        raise
