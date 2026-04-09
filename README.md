@@ -1,3 +1,15 @@
+---
+title: Blood Pathology LIMS Environment
+emoji: 🩸
+colorFrom: red
+colorTo: purple
+sdk: docker
+app_port: 8000
+tags:
+  - openenv
+short_description: "Blood pathology diagnostic AI agent environment"
+pinned: false
+---
 # Blood Pathology LIMS Environment 🩸
 
 A high-fidelity clinical pathology diagnostic environment that embeds an autonomous AI agent into a hospital-grade **Laboratory Information Management System (LIMS)**. The agent must interpret quantitative blood biomarker panels against population- and context-adjusted reference ranges, cross-reference active pharmacotherapy for drug-lab interactions, synthesize multi-panel disease signatures, and issue ICD-10–coded diagnostic reports — mirroring the complete cognitive workflow of a board-certified clinical pathologist.
