@@ -117,6 +117,7 @@ async def root():
   <div class="scores">
     <table>
       <tr><th>Model</th><th>Easy</th><th>Medium</th><th>Hard</th><th>Avg</th></tr>
+      <tr><td>Gemma-4-26B-A4B</td><td>0.99</td><td>0.94</td><td>0.08</td><td><b>0.67</b></td></tr>
       <tr><td>Gemma-4-31B</td><td>0.99</td><td>0.94</td><td>0.30</td><td><b>0.74</b></td></tr>
       <tr><td>Qwen 3.6 Plus</td><td>0.99</td><td>0.51</td><td>0.99</td><td><b>0.83</b></td></tr>
       <tr><td>MiniMax M2.7</td><td>0.99</td><td>0.94</td><td>0.33</td><td><b>0.75</b></td></tr>
@@ -126,8 +127,8 @@ async def root():
   <h2>API Endpoints</h2>
   <div class="endpoints">
     <div class="ep"><span><span class="method">GET</span> <span class="path">/health</span></span><span class="info">Health check</span></div>
-    <div class="ep"><span><span class="method">POST</span> <span class="path">/reset</span></span><span class="info">Start new episode</span></div>
     <div class="ep"><span><span class="method">POST</span> <span class="path">/step</span></span><span class="info">Execute action</span></div>
+    <div class="ep"><span><span class="method">POST</span> <span class="path">/reset</span></span><span class="info">Start new episode</span></div>
     <div class="ep"><span><span class="method">GET</span> <span class="path">/state</span></span><span class="info">Current state</span></div>
     <div class="ep"><span><span class="method">GET</span> <span class="path">/schema</span></span><span class="info">Action/observation schema</span></div>
   </div>
